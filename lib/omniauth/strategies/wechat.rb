@@ -17,7 +17,7 @@ module OmniAuth
       option :token_params, {parse: :json}
 
       uid do
-        raw_info['openid']
+        raw_info['unionid'] || raw_info['openid']
       end
 
       info do

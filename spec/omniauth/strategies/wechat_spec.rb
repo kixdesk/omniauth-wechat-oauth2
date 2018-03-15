@@ -76,7 +76,7 @@ describe OmniAuth::Strategies::Wechat do
   end
 
   describe "#build_access_token" do
-    specify "request includes 'appid', 'secret', 'code', 'grant_type' and will parse response as json"do 
+    specify "request includes 'appid', 'secret', 'code', 'grant_type' and will parse response as json"do
       subject.stub(:client => client, :request=>double("request", params:{"code"=>"server_code"}))
       client.should_receive(:get_token).with({
         "appid" => "appid",
@@ -95,8 +95,8 @@ describe OmniAuth::Strategies::Wechat do
 
     context "when scope is snsapi_base" do
       let(:access_token) { OAuth2::AccessToken.from_hash(client, {
-        "openid"=>"openid", 
-        "scope"=>"snsapi_base", 
+        "openid"=>"openid",
+        "scope"=>"snsapi_base",
         "access_token"=>"access_token"
       })}
 
@@ -108,13 +108,13 @@ describe OmniAuth::Strategies::Wechat do
 
     context "when scope is snsapi_userinfo" do
       let(:access_token) { OAuth2::AccessToken.from_hash(client, {
-        "openid"=>"openid", 
-        "scope"=>"snsapi_userinfo", 
+        "openid"=>"openid",
+        "scope"=>"snsapi_userinfo",
         "access_token"=>"access_token"
       })}
 
       specify "will query for user info" do
-        response_body = %({"openid": "OPENID","nickname": "\x14\x1fNICKNAME", "sex": "1", "province": "PROVINCE", "city": "CITY", "country": "COUNTRY", "headimgurl": "header_image_url", "privilege": ["PRIVILEGE1", "PRIVILEGE2"]})
+        response_body = %({"openid": "OPENID","nickname": "\x14\x1fNICKNAME", "sex": "1", "province": "PROVINCE", "city": "CITY", "country": "COUNTRY", "headimgurl": "header_image_url", "unionid": "UNIONID", "privilege": ["PRIVILEGE1", "PRIVILEGE2"]})
 
         response_hash = {
           "openid" => "OPENID",
@@ -123,7 +123,8 @@ describe OmniAuth::Strategies::Wechat do
           "province" => "PROVINCE",
           "city" => "CITY",
           "country" => "COUNTRY",
-          "headimgurl" => "header_image_url", 
+          "headimgurl" => "header_image_url",
+          "unionid" => "UNIONID",
           "privilege" => ["PRIVILEGE1", "PRIVILEGE2"]
         }
 
